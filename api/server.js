@@ -8,8 +8,8 @@ const projectsRouter = require('./projects/projects-router');
 
 server.use(helmet())
 server.use(express.json());
-server.use('/api/actions', actionsRouter);
-server.use('/api/projects', projectsRouter);
+// server.use('/api/actions', actionsRouter);
+// server.use('/api/projects', projectsRouter);
 
 server.get('/', (req, res) => {
     res.send(`
