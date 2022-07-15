@@ -21,23 +21,33 @@ router.get('/:id', validateProjectId, (req, res) => {
 });
 
 //CREATE A NEW PROJECT
-router.post('/', (req, res) => {
-
+router.post('/', validateProject, (req, res, next) => {
+    const projectInfo = { ...req.name, ...req.description }
+    Projects.insert(projectInfo)
+        .then(newProject => {
+            res.status(201).json(newProject)
+        })
+        .catch(next)
 });
 
 //UPDATE A PROJECT
-router.put('/:id', (req, res) => {
-
+router.put('/:id', validateProjectId, validateProject, (req, res, next) => {
+    const projectInfos = (req.name, req.description) 
+    Projects.update(req.params.id, projectInfos)
+        .then(project => {
+            res.status(200).json(project)
+        })
+        .catch(next)
 });
 
-//DELETE A PROJECT
-router.delete('/:id', (req, res) => {
+// //DELETE A PROJECT
+// router.delete('/:id', (req, res) => {
 
-});
+// });
 
-//GET ARRAY OF ACTIONS FOR A PROJECT
-router.get('/:id/actions', (req, res) => {
+// //GET ARRAY OF ACTIONS FOR A PROJECT
+// router.get('/:id/actions', (req, res) => {
 
-});
+// });
 
 module.exports = router;

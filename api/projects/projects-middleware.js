@@ -18,7 +18,7 @@ function validateProject(req, res, next) {
         return;
     }
     req.name = {
-        name: req.body.name.trim()
+        name: req.body.name
     };
     req.description = {
         description: req.body.description
