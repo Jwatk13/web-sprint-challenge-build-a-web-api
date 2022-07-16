@@ -13,19 +13,25 @@ async function validateActionId(req, res, next) {
 }
 
 function validateAction(req, res, next) {
-    if (!project_id || !req.body.description || !req.body.notes) {
-        res.status(400).json({ message: "Requires an existing project_id, a description, and a notes field to be filled out" });
+    if (!req.body.description || !req.body.notes) {
+        res.status(400).json({ message: "Requires a description and a notes field to be filled out" });
+        return;
+    } else if (req.body.description > 128) {
+        res.status(400).json({ message: "Description must be less than 129 characters long" });
         return;
     }
-    req.project_id = {
-        project_id: req.body.project_id
-    };
     req.description = {
-        description: req.body.description.length < 128
+        description: req.body.description
     };
     req.notes = {
         notes: req.body.notes
     };
+    next();
+}
+
+function getProjectsId(req, res, next) {
+    let id = req.params.id;
+    res.send(id);
     next();
 }
 

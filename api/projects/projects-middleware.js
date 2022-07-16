@@ -26,4 +26,10 @@ function validateProject(req, res, next) {
     next();
 }
 
-module.exports = { validateProjectId, validateProject };
+function getProjectsId(req, res, next) {
+    let id = req.params.id;
+    req.id = id
+    next()
+}
+
+module.exports = { validateProjectId, validateProject, getProjectsId };
