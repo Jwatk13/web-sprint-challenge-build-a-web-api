@@ -22,7 +22,7 @@ router.get('/:id', validateProjectId, (req, res) => {
 
 //CREATE A NEW PROJECT
 router.post('/', validateProject, (req, res, next) => {
-    const projectInfo = { ...req.name, ...req.description, completed: !req.name || !req.description ? false : true }
+    const projectInfo = { ...req.name, ...req.description, ...req.completed}
     Projects.insert(projectInfo)
         .then(newProject => {
             res.status(201).json(newProject)
@@ -32,7 +32,7 @@ router.post('/', validateProject, (req, res, next) => {
 
 //UPDATE A PROJECT
 router.put('/:id', validateProjectId, validateProject, (req, res, next) => {
-    const projectInfos = { ...req.name, ...req.description, completed: !req.name || !req.description ? false : true } 
+    const projectInfos = { ...req.name, ...req.description, ...req.completed } 
     Projects.update(req.params.id, projectInfos)
         .then(project => {
             res.status(200).json(project)

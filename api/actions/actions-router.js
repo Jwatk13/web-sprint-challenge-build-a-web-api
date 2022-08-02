@@ -22,13 +22,13 @@ router.get('/:id', validateActionId, (req, res) => {
 });
 
 //CREATE A NEW ACTION
-router.post('/', validateAction, getProjectsId, (req, res, next) => { 
-    const actionInfo = { ...req.description, ...req.notes, project_id: console.log(req.id) }
-    Actions.insert(actionInfo)
-        .then(newAction => {
-            res.status(201).json(newAction)
-        })
-        .catch(next)
+router.post('/', validateAction, getProjectsId, async (req, res, next) => { 
+    try {
+        const newAction = await Actions.insert(req.body)
+        res.json(newAction)
+    } catch (err) {
+        next(err)
+    }
 });
 
 //UPDATE AN ACTION

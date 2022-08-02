@@ -13,15 +13,20 @@ async function validateProjectId(req, res, next) {
 }
 
 function validateProject(req, res, next) {
-    if (!req.body.name || !req.body.description) {
+    if (!req.body.name || !req.body.description ) {
         res.status(400).json({ message: "Requires both name and description fields to be filled out" });
         return;
+    } else if (req.body.completed == null) {
+       return next({ status: 400 });
     }
     req.name = {
         name: req.body.name
     };
     req.description = {
         description: req.body.description
+    };
+    req.completed = {
+        completed: req.body.completed
     };
     next();
 }

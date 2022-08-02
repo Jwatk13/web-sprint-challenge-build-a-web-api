@@ -19,20 +19,10 @@ function validateAction(req, res, next) {
     } else if (req.body.description > 128) {
         res.status(400).json({ message: "Description must be less than 129 characters long" });
         return;
+    } else {
+        next();  
     }
-    req.description = {
-        description: req.body.description
-    };
-    req.notes = {
-        notes: req.body.notes
-    };
-    next();
-}
-
-function getProjectsId(req, res, next) {
-    let id = req.params.id;
-    res.send(id);
-    next();
+    
 }
 
 module.exports = { validateActionId, validateAction };
